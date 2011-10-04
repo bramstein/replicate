@@ -1,6 +1,16 @@
 #!/usr/bin/env node
 
-var replicate = require("./main");
+var Replicator = require("./main");
+
+function replicate (from, to, cb) {
+  if (typeof from === 'object') var options = from
+  else {
+    var options = {from:from, to:to}
+  }
+  var rep = new Replicator(options)
+  rep.push(cb)
+  return rep
+}
 
 var args = process.argv.slice(0);
 

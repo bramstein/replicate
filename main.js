@@ -153,16 +153,5 @@ Replicator.prototype.continuous = function () {
   })
 }
   
+module.exports = Replicator
 
-function replicate (from, to, cb) {
-  if (typeof from === 'object') var options = from
-  else {
-    var options = {from:from, to:to}
-  }
-  var rep = new Replicator(options)
-  rep.push(cb)
-  return rep
-}
-
-module.exports = replicate
-replicate.Replicator = Replicator
