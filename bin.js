@@ -3,7 +3,7 @@
 var Replicator = require("./main"),
     optimist = require('optimist'),
     argv = optimist
-        .usage('usage: $0 [options] to from')
+        .usage('usage: $0 to from [options]')
         .demand(2)
         .wrap(80)
         .options('c', {
@@ -45,10 +45,12 @@ if (argv.help) {
         console.log('Replicated "' + obj.id + '" at rev: "' + obj.rev + '".');
     });
 
-    if (!argv.continuous) {
-        replicator.push(function (results) {
-            console.log('replication complete');
-        });
+    replicator.push(function (results) {
+        console.log('Database "' + from + '" replicated to "' + to + '".');
+    });
+
+    if (argv.continuous) {
+        replicator.continuous();
     }
 }
 
