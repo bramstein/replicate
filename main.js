@@ -108,7 +108,15 @@ Replicator.prototype.push = function (cb) {
       if (e) throw e
       if (resp.statusCode !== 200) throw new Error("status is not 200.")
       var byid = {}
+
       options.since = body.results[body.results.length - 1].seq
+
+      if (options.seq) {
+        body.results = body.results.filter(function (change) {
+          return change.seq >= options.seq;
+        });
+      }
+
       body.results.forEach(function (change) {
         byid[change.id] = change.changes.map(function (r) {return r.rev})
       })
